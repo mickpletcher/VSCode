@@ -58,7 +58,7 @@ Summarizes a pull request or diff into a reviewer-friendly overview with key cha
 
 ## Skillpack Script
 
-The repository includes a packaging script at [scripts/skillpack.sh](scripts/skillpack.sh). It builds a distributable bundle under `dist/skillpack`, copies every top-level skill directory that contains a `SKILL.md`, includes the root README and license, writes a simple manifest, and creates a `dist/skillpack.tar.gz` archive.
+The repository includes a packaging script at [scripts/skillpack.sh](scripts/skillpack.sh). It builds a distributable bundle under `dist/skillpack`, copies every top-level skill directory that contains a `SKILL.md`, includes the root README and license, writes a manifest, and creates a `dist/skillpack.tar.gz` archive.
 
 Run it from the repository root with:
 
@@ -71,6 +71,33 @@ Or provide a custom output directory:
 ```bash
 ./scripts/skillpack.sh /path/to/output/skillpack
 ```
+
+Validate the repository without building an archive:
+
+```bash
+./scripts/skillpack.sh --validate
+```
+
+Generate a JSON manifest instead of the default text manifest:
+
+```bash
+./scripts/skillpack.sh --manifest=json
+```
+
+The JSON manifest includes bundle metadata and per-skill records with the skill name, description, packaged paths, archive path, and skill count.
+
+## GitHub Actions
+
+The repository now includes [/.github/workflows/build-skillpack.yml](.github/workflows/build-skillpack.yml). The workflow validates the catalog, builds the skillpack with a JSON manifest, uploads the bundle as a workflow artifact, and attaches the archive to published releases.
+
+It runs on:
+
+- pushes to `main`
+- pull requests
+- published releases
+- manual workflow dispatch
+
+The repository also includes [/.github/workflows/create-release-tag.yml](.github/workflows/create-release-tag.yml). That workflow can be run manually to create a semantic version tag and GitHub release from a target branch or commit. Publishing the release then triggers the build workflow, which attaches the generated skillpack archive.
 
 ## Next Additions
 

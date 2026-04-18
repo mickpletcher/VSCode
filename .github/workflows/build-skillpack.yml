@@ -1,0 +1,43 @@
+name: Build Skillpack
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  release:
+    types:
+      - published
+  workflow_dispatch:
+
+jobs:
+  build-skillpack:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate skill catalog
+        run: ./scripts/skillpack.sh --validate
+
+      - name: Build skillpack archive
+        run: ./scripts/skillpack.sh --manifest=json
+
+      - name: Upload skillpack artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillpack
+          path: |
+            dist/skillpack
+            dist/skillpack.tar.gz
+
+      - name: Attach archive to release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/skillpack.tar.gz
+            dist/skillpack/manifest.json

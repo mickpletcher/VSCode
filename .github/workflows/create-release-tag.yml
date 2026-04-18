@@ -1,0 +1,44 @@
+name: Create Release Tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Release tag to create, for example v1.0.0
+        required: true
+        type: string
+      target:
+        description: Branch or commit SHA to tag
+        required: false
+        default: main
+        type: string
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target }}
+
+      - name: Validate version format
+        run: |
+          if [[ ! "${{ inputs.version }}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([-.][A-Za-z0-9]+)*$ ]]; then
+            echo "Version must look like v1.2.3 or v1.2.3-rc1" >&2
+            exit 1
+          fi
+
+      - name: Validate skill catalog
+        run: ./scripts/skillpack.sh --validate
+
+      - name: Create GitHub release and tag
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ inputs.version }}
+          target_commitish: ${{ inputs.target }}
+          generate_release_notes: true
+          make_latest: true
