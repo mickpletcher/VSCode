@@ -10,6 +10,7 @@ Its intended output is a complete, documented skill entry that includes:
 
 - a new top-level folder
 - a valid `SKILL.md`
+- explicit per-skill version metadata in frontmatter
 - a human-readable `README.md`
 - an update to the root repository `README.md`
 
@@ -31,6 +32,7 @@ Without a scaffold, new skills are easy to add inconsistently. This skill standa
 The skill focuses on four things:
 
 - discoverable descriptions in `SKILL.md`
+- stable per-skill version metadata
 - narrow, reusable workflow scope
 - plain-language documentation for humans
 - keeping the root README updated with links

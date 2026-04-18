@@ -1,5 +1,11 @@
 # VS Code Copilot Skills
 
+[![Build Skillpack](https://github.com/mickpletcher/VSCode/actions/workflows/build-skillpack.yml/badge.svg)](https://github.com/mickpletcher/VSCode/actions/workflows/build-skillpack.yml)
+[![Create Release Tag](https://github.com/mickpletcher/VSCode/actions/workflows/create-release-tag.yml/badge.svg)](https://github.com/mickpletcher/VSCode/actions/workflows/create-release-tag.yml)
+[![Latest Release](https://img.shields.io/github/v/release/mickpletcher/VSCode)](https://github.com/mickpletcher/VSCode/releases)
+[![Download Skillpack](https://img.shields.io/badge/release%20artifact-skillpack.tar.gz-1f883d)](https://github.com/mickpletcher/VSCode/releases/latest/download/skillpack.tar.gz)
+[![Download Manifest](https://img.shields.io/badge/release%20artifact-manifest.json-0a7ea4)](https://github.com/mickpletcher/VSCode/releases/latest/download/manifest.json)
+
 A small catalog of reusable GitHub Copilot skills for VS Code. Each skill in this repository packages a repeatable workflow as:
 
 - a machine-readable [SKILL.md](git-autopilot/SKILL.md)
@@ -52,6 +58,7 @@ Summarizes a pull request or diff into a reviewer-friendly overview with key cha
 ## Design Rules
 
 - keep each skill focused on one repeatable workflow
+- include a stable `version` field in each skill's frontmatter
 - use strong trigger phrases in each `description` field
 - write supporting READMEs for humans, not just Copilot
 - prefer procedural instructions and explicit edge cases over vague guidance
@@ -84,7 +91,7 @@ Generate a JSON manifest instead of the default text manifest:
 ./scripts/skillpack.sh --manifest=json
 ```
 
-The JSON manifest includes bundle metadata and per-skill records with the skill name, description, packaged paths, archive path, and skill count.
+The JSON manifest includes bundle metadata, SHA-256 hashes for packaged top-level files, and per-skill records with the skill name, version, description, packaged paths, and file hashes.
 
 ## GitHub Actions
 

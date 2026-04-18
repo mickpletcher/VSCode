@@ -1,5 +1,6 @@
 ---
 name: release-notes
+version: 1.0.0
 description: Drafts release notes or changelog entries from git history, staged diffs, or completed work items. Use this when asked to write release notes, summarize a release, prepare a changelog entry, or turn recent changes into a publishable update summary.
 argument-hint: [optional: version, date range, or scope]
 ---

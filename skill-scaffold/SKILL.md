@@ -1,5 +1,6 @@
 ---
 name: skill-scaffold
+version: 1.0.0
 description: Creates a new GitHub Copilot skill folder with a valid SKILL.md, a human-readable README.md, and an index entry in the repository root README. Use this when asked to add a new skill, scaffold a Copilot skill, document a skill folder, or expand a skill catalog repository.
 argument-hint: [optional: skill name and purpose]
 ---
@@ -51,6 +52,7 @@ Good examples:
 Create a machine-readable skill definition with:
 
 - `name`
+- `version`
 - `description`
 - optional `argument-hint`
 - a clear body covering purpose, triggers, workflow, output expectations, and edge cases

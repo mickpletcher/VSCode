@@ -1,5 +1,6 @@
 ---
 name: git-commit-sync
+version: 1.0.0
 description: Automates the full git commit workflow in VS Code. Analyzes staged and unstaged changes, generates a conventional commit message, stages files, commits, and pushes to GitHub. Use this when asked to commit changes, generate a commit message, push to GitHub, or sync with the remote repository.
 argument-hint: [optional: specific files or folders to include]
 ---

@@ -40,11 +40,33 @@ trim_quotes() {
 
   if [[ "$value" == \"*\" && "$value" == *\" ]]; then
     value=${value:1:-1}
-  elif [[ "$value" == \'.*\' ]]; then
+  elif [[ "$value" == \'*\' && "$value" == *\' ]]; then
     value=${value:1:-1}
   fi
 
   printf '%s' "$value"
+}
+
+file_sha256() {
+  local file_path="$1"
+
+  if command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 "$file_path" | awk '{print $1}'
+    return
+  fi
+
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "$file_path" | awk '{print $1}'
+    return
+  fi
+
+  if command -v openssl >/dev/null 2>&1; then
+    openssl dgst -sha256 -r "$file_path" | awk '{print $1}'
+    return
+  fi
+
+  echo "No SHA-256 tool is available" >&2
+  exit 1
 }
 
 extract_frontmatter_value() {
@@ -100,6 +122,11 @@ validate_skills() {
       echo "Missing description field in $skill_name/SKILL.md" >&2
       exit 1
     fi
+
+    if ! grep -q '^version:' "$skill_dir/SKILL.md"; then
+      echo "Missing version field in $skill_name/SKILL.md" >&2
+      exit 1
+    fi
   done
 }
 
@@ -118,25 +145,45 @@ write_text_manifest() {
 
 write_json_manifest() {
   local manifest_file="$output_dir/manifest.json"
-  local generated_at skill_dir skill_name skill_description first=true
+  local generated_at root_readme_hash license_hash skill_dir skill_name skill_version skill_description
+  local skill_readme_hash skill_file_hash first=true
 
   generated_at=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+  root_readme_hash=$(file_sha256 "$repo_root/README.md")
+
+  if [[ -f "$repo_root/LICENSE" ]]; then
+    license_hash=$(file_sha256 "$repo_root/LICENSE")
+  fi
 
   {
     printf '{\n'
     printf '  "kind": "skillpack",\n'
-    printf '  "schema_version": 2,\n'
+    printf '  "schema_version": 3,\n'
     printf '  "manifest_format": "json",\n'
     printf '  "source": "%s",\n' "$(json_escape "$repo_root")"
     printf '  "output": "%s",\n' "$(json_escape "$output_dir")"
     printf '  "archive": "%s",\n' "$(json_escape "$output_dir.tar.gz")"
     printf '  "generated_at": "%s",\n' "$generated_at"
+    printf '  "hash_algorithm": "sha256",\n'
     printf '  "skill_count": %s,\n' "${#skill_dirs[@]}"
+    printf '  "bundle_files": [\n'
+    printf '    {"path": "README.md", "sha256": "%s"}' "$root_readme_hash"
+
+    if [[ -n "${license_hash:-}" ]]; then
+      printf ',\n'
+      printf '    {"path": "LICENSE", "sha256": "%s"}' "$license_hash"
+    fi
+
+    printf '\n'
+    printf '  ],\n'
     printf '  "skills": [\n'
 
     for skill_dir in "${skill_dirs[@]}"; do
       skill_name=$(basename "$skill_dir")
+      skill_version=$(extract_frontmatter_value "$skill_dir/SKILL.md" "version")
       skill_description=$(extract_frontmatter_value "$skill_dir/SKILL.md" "description")
+      skill_readme_hash=$(file_sha256 "$skill_dir/README.md")
+      skill_file_hash=$(file_sha256 "$skill_dir/SKILL.md")
 
       if [[ "$first" == true ]]; then
         first=false
@@ -144,12 +191,17 @@ write_json_manifest() {
         printf ',\n'
       fi
 
-      printf '    {"name": "%s", "path": "%s", "description": "%s", "readme": "%s", "skill_file": "%s"}' \
+      printf '    {"name": "%s", "version": "%s", "path": "%s", "description": "%s", "readme": "%s", "skill_file": "%s", "files": [{"path": "%s", "sha256": "%s"}, {"path": "%s", "sha256": "%s"}]}' \
         "$(json_escape "$skill_name")" \
+        "$(json_escape "$skill_version")" \
         "$(json_escape "skills/$skill_name")" \
         "$(json_escape "$skill_description")" \
         "$(json_escape "skills/$skill_name/README.md")" \
-        "$(json_escape "skills/$skill_name/SKILL.md")"
+        "$(json_escape "skills/$skill_name/SKILL.md")" \
+        "$(json_escape "skills/$skill_name/README.md")" \
+        "$skill_readme_hash" \
+        "$(json_escape "skills/$skill_name/SKILL.md")" \
+        "$skill_file_hash"
     done
 
     printf '\n'
