@@ -1,34 +1,53 @@
 # VS Code Copilot Skills
 
-This repository is a small collection of custom GitHub Copilot skill folders for use in VS Code. Each skill lives in its own subdirectory and includes a `SKILL.md` file that defines the machine-readable behavior Copilot uses, plus supporting documentation for humans.
+A small catalog of reusable GitHub Copilot skills for VS Code. Each skill in this repository packages a repeatable workflow as:
 
-## Repository layout
+- a machine-readable [SKILL.md](git-autopilot/SKILL.md)
+- a human-readable local README
+- a top-level folder that can be browsed directly from GitHub
 
-- skill folders live at the top level of the repository
-- each skill folder contains its own `SKILL.md`
-- some skill folders also include a local `README.md` with a plain-language explanation of what the skill does
+The goal is straightforward: keep useful workflows packaged, documented, and easy to extend.
 
-## Available skills
+## Skill Catalog
 
 ### [git-autopilot](git-autopilot)
 
-Automates a structured git commit workflow inside VS Code chat sessions. The skill analyzes repository changes, generates a Conventional Commits message, stages files when needed, asks for confirmation, then commits and pushes.
+Automates the path from git status to commit and push, with Conventional Commits guidance and guardrails for common git problems.
 
-Links:
+- Folder: [git-autopilot](git-autopilot)
+- Skill file: [git-autopilot/SKILL.md](git-autopilot/SKILL.md)
+- Docs: [git-autopilot/README.md](git-autopilot/README.md)
 
-- Skill folder: [git-autopilot](git-autopilot)
-- Skill definition: [git-autopilot/SKILL.md](git-autopilot/SKILL.md)
-- Documentation: [git-autopilot/README.md](git-autopilot/README.md)
+### [skill-scaffold](skill-scaffold)
 
-## What these skills are for
+Creates new skill folders with valid frontmatter, supporting documentation, and an updated root index entry so the repository can scale cleanly.
 
-These folders are intended to make repeated development workflows easier to invoke through Copilot. Instead of rewriting instructions each time, a skill packages:
+- Folder: [skill-scaffold](skill-scaffold)
+- Skill file: [skill-scaffold/SKILL.md](skill-scaffold/SKILL.md)
+- Docs: [skill-scaffold/README.md](skill-scaffold/README.md)
 
-- when the workflow should be used
-- how the workflow should be executed
-- any formatting or behavioral rules it should follow
-- edge cases and safety checks it should handle
+### [release-notes](release-notes)
 
-## Adding more skills
+Drafts release notes and changelog entries from real repository changes so updates are publishable, concise, and tied to actual work.
 
-To expand this repository, add another top-level folder with at least a `SKILL.md` file. If the skill needs human-facing documentation, add a `README.md` alongside it and link that folder from this root README.
+- Folder: [release-notes](release-notes)
+- Skill file: [release-notes/SKILL.md](release-notes/SKILL.md)
+- Docs: [release-notes/README.md](release-notes/README.md)
+
+## Repository Structure
+
+- each skill lives in its own top-level directory
+- each skill directory should contain a `SKILL.md`
+- each skill directory should contain a `README.md`
+- the root README acts as the public catalog and should be updated when new skills are added
+
+## Design Rules
+
+- keep each skill focused on one repeatable workflow
+- use strong trigger phrases in each `description` field
+- write supporting READMEs for humans, not just Copilot
+- prefer procedural instructions and explicit edge cases over vague guidance
+
+## Next Additions
+
+Natural future additions for this repository would be skills for changelog maintenance, repository bootstrap, issue triage, or pull request summarization.
