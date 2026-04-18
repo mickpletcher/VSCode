@@ -34,6 +34,14 @@ Drafts release notes and changelog entries from real repository changes so updat
 - Skill file: [release-notes/SKILL.md](release-notes/SKILL.md)
 - Docs: [release-notes/README.md](release-notes/README.md)
 
+### [pr-summary](pr-summary)
+
+Summarizes a pull request or diff into a reviewer-friendly overview with key changes, risks, and testing notes.
+
+- Folder: [pr-summary](pr-summary)
+- Skill file: [pr-summary/SKILL.md](pr-summary/SKILL.md)
+- Docs: [pr-summary/README.md](pr-summary/README.md)
+
 ## Repository Structure
 
 - each skill lives in its own top-level directory
@@ -48,6 +56,22 @@ Drafts release notes and changelog entries from real repository changes so updat
 - write supporting READMEs for humans, not just Copilot
 - prefer procedural instructions and explicit edge cases over vague guidance
 
+## Skillpack Script
+
+The repository includes a packaging script at [scripts/skillpack.sh](scripts/skillpack.sh). It builds a distributable bundle under `dist/skillpack`, copies every top-level skill directory that contains a `SKILL.md`, includes the root README and license, writes a simple manifest, and creates a `dist/skillpack.tar.gz` archive.
+
+Run it from the repository root with:
+
+```bash
+./scripts/skillpack.sh
+```
+
+Or provide a custom output directory:
+
+```bash
+./scripts/skillpack.sh /path/to/output/skillpack
+```
+
 ## Next Additions
 
-Natural future additions for this repository would be skills for changelog maintenance, repository bootstrap, issue triage, or pull request summarization.
+Natural future additions for this repository would be skills for changelog maintenance, repository bootstrap, issue triage, or repository release preparation.
