@@ -1,8 +1,9 @@
 ---
 name: skill-scaffold
 version: 1.0.0
-description: Creates a new GitHub Copilot skill folder with a valid SKILL.md, a human-readable README.md, and an index entry in the repository root README. Use this when asked to add a new skill, scaffold a Copilot skill, document a skill folder, or expand a skill catalog repository.
-argument-hint: [optional: skill name and purpose]
+description: Creates a new GitHub Copilot skill folder with a valid SKILL.md, a human-readable README.md, and an index entry in the repository root README. Use this when asked to add a new skill, scaffold a Copilot skill, create a skill folder, bootstrap a skill, document a skill folder, or expand a skill catalog repository.
+argument-hint: "[skill-name] optional skill name and purpose"
+disable-model-invocation: true
 ---
 
 # Skill Scaffold

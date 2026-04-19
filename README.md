@@ -3,13 +3,13 @@
 [![Build Skillpack](https://github.com/mickpletcher/VSCode/actions/workflows/build-skillpack.yml/badge.svg)](https://github.com/mickpletcher/VSCode/actions/workflows/build-skillpack.yml)
 [![Create Release Tag](https://github.com/mickpletcher/VSCode/actions/workflows/create-release-tag.yml/badge.svg)](https://github.com/mickpletcher/VSCode/actions/workflows/create-release-tag.yml)
 [![Latest Release](https://img.shields.io/github/v/release/mickpletcher/VSCode)](https://github.com/mickpletcher/VSCode/releases)
-[![Download Skillpack](https://img.shields.io/badge/release%20artifact-skillpack.tar.gz-1f883d)](https://github.com/mickpletcher/VSCode/releases/latest/download/skillpack.tar.gz)
+[![Download Skillpack](https://img.shields.io/badge/release%20artifact-skillpack.zip-1f883d)](https://github.com/mickpletcher/VSCode/releases/latest/download/skillpack.zip)
 [![Download Manifest](https://img.shields.io/badge/release%20artifact-manifest.json-0a7ea4)](https://github.com/mickpletcher/VSCode/releases/latest/download/manifest.json)
 
 A small catalog of reusable GitHub Copilot skills for VS Code. Each skill in this repository packages a repeatable workflow as:
 
-- a machine-readable [SKILL.md](git-autopilot/SKILL.md)
-- a human-readable local README
+- a machine-readable `SKILL.md` with YAML frontmatter Copilot uses to trigger the skill
+- a human-readable `README.md`
 - a top-level folder that can be browsed directly from GitHub
 
 The goal is straightforward: keep useful workflows packaged, documented, and easy to extend.
@@ -58,14 +58,14 @@ Summarizes a pull request or diff into a reviewer-friendly overview with key cha
 ## Design Rules
 
 - keep each skill focused on one repeatable workflow
-- include a stable `version` field in each skill's frontmatter
+- include a `version` field in each skill's frontmatter — this is a repo convention for the skillpack manifest, not part of the Agent Skills specification
 - use strong trigger phrases in each `description` field
 - write supporting READMEs for humans, not just Copilot
 - prefer procedural instructions and explicit edge cases over vague guidance
 
 ## Skillpack Script
 
-The repository includes a packaging script at [scripts/skillpack.sh](scripts/skillpack.sh). It builds a distributable bundle under `dist/skillpack`, copies every top-level skill directory that contains a `SKILL.md`, includes the root README and license, writes a manifest, and creates a `dist/skillpack.tar.gz` archive. See [scripts/README.md](scripts/README.md) for full usage details.
+The repository includes a packaging script at [scripts/skillpack.sh](scripts/skillpack.sh). It builds a distributable bundle under `dist/skillpack`, copies every top-level skill directory that contains a `SKILL.md`, includes the root README and license, writes a manifest, and creates a `dist/skillpack.zip` archive. See [scripts/README.md](scripts/README.md) for full usage details.
 
 ## GitHub Actions
 

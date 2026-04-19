@@ -91,7 +91,7 @@ collect_skills() {
 }
 
 validate_skills() {
-  local skill_dir skill_name
+  local skill_dir skill_name declared_name name_length desc_length
 
   collect_skills
 
@@ -107,24 +107,48 @@ validate_skills() {
       echo "Missing README.md for skill: $skill_name" >&2
       exit 1
     fi
-
     if ! grep -q '^---$' "$skill_dir/SKILL.md"; then
       echo "Missing YAML frontmatter markers in $skill_name/SKILL.md" >&2
       exit 1
     fi
-
     if ! grep -q '^name:' "$skill_dir/SKILL.md"; then
       echo "Missing name field in $skill_name/SKILL.md" >&2
       exit 1
     fi
-
     if ! grep -q '^description:' "$skill_dir/SKILL.md"; then
       echo "Missing description field in $skill_name/SKILL.md" >&2
       exit 1
     fi
-
     if ! grep -q '^version:' "$skill_dir/SKILL.md"; then
       echo "Missing version field in $skill_name/SKILL.md" >&2
+      exit 1
+    fi
+
+    # Enforce Agent Skills spec: name must match folder name exactly
+    declared_name=$(extract_frontmatter_value "$skill_dir/SKILL.md" "name")
+    if [[ "$declared_name" != "$skill_name" ]]; then
+      echo "Name mismatch in $skill_name/SKILL.md: frontmatter declares '$declared_name' but folder is '$skill_name'" >&2
+      echo "VS Code will not load this skill until these match." >&2
+      exit 1
+    fi
+
+    # Enforce spec: name must be lowercase letters, digits, and hyphens only
+    if [[ ! "$declared_name" =~ ^[a-z0-9-]+$ ]]; then
+      echo "Invalid name '$declared_name' in $skill_name/SKILL.md: must be lowercase letters, digits, and hyphens only" >&2
+      exit 1
+    fi
+
+    # Enforce spec: name must be max 64 characters
+    name_length=${#declared_name}
+    if [[ $name_length -gt 64 ]]; then
+      echo "Name too long in $skill_name/SKILL.md: $name_length characters (max 64)" >&2
+      exit 1
+    fi
+
+    # Enforce spec: description must be max 1024 characters
+    desc_length=$(extract_frontmatter_value "$skill_dir/SKILL.md" "description" | wc -c)
+    if [[ $desc_length -gt 1024 ]]; then
+      echo "Description too long in $skill_name/SKILL.md: $desc_length characters (max 1024)" >&2
       exit 1
     fi
   done
@@ -162,7 +186,7 @@ write_json_manifest() {
     printf '  "manifest_format": "json",\n'
     printf '  "source": "%s",\n' "$(json_escape "$repo_root")"
     printf '  "output": "%s",\n' "$(json_escape "$output_dir")"
-    printf '  "archive": "%s",\n' "$(json_escape "$output_dir.tar.gz")"
+    printf '  "archive": "%s",\n' "$(json_escape "$output_dir.zip")"
     printf '  "generated_at": "%s",\n' "$generated_at"
     printf '  "hash_algorithm": "sha256",\n'
     printf '  "skill_count": %s,\n' "${#skill_dirs[@]}"
@@ -282,7 +306,12 @@ else
   write_text_manifest
 fi
 
-tar -czf "$output_dir.tar.gz" -C "$(dirname "$output_dir")" "$(basename "$output_dir")"
+if ! command -v zip >/dev/null 2>&1; then
+  echo "zip is not available" >&2
+  exit 1
+fi
+
+(cd "$(dirname "$output_dir")" && zip -qr "$(basename "$output_dir").zip" "$(basename "$output_dir")")
 
 echo "Created skillpack at $output_dir"
-echo "Created archive at $output_dir.tar.gz"
+echo "Created archive at $output_dir.zip"

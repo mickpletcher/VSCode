@@ -1,8 +1,8 @@
 ---
 name: release-notes
 version: 1.0.0
-description: Drafts release notes or changelog entries from git history, staged diffs, or completed work items. Use this when asked to write release notes, summarize a release, prepare a changelog entry, or turn recent changes into a publishable update summary.
-argument-hint: [optional: version, date range, or scope]
+description: Drafts release notes or changelog entries from git history, staged diffs, or completed work items. Use this when asked to write release notes, summarize a release, prepare a changelog entry, update the changelog, publish a release summary, or turn recent commits into a structured update for users or maintainers.
+argument-hint: "[version] optional version, date range, or scope"
 ---
 
 # Release Notes

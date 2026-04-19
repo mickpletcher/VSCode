@@ -1,8 +1,8 @@
 ---
 name: pr-summary
 version: 1.0.0
-description: Summarizes a pull request or pending code changes into a reviewer-friendly overview with highlights, risks, and testing notes. Use this when asked to write a PR summary, draft a pull request description, explain a change set, or prepare reviewer notes from a diff.
-argument-hint: [optional: branch, file scope, or PR theme]
+description: Summarizes a pull request or pending code changes into a reviewer-friendly overview with highlights, key changes, risks, and testing notes. Use this when asked to write a PR summary, draft a pull request description, explain a change set, summarize a branch, prepare reviewer notes from a diff, or generate PR context for a code review.
+argument-hint: "[branch] optional branch name, file scope, or PR theme"
 ---
 
 # Pull Request Summary
