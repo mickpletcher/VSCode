@@ -37,6 +37,11 @@ The skill focuses on four things:
 - plain-language documentation for humans
 - keeping the root README updated with links
 
-## Why this README exists
+## Files
 
-`SKILL.md` is written for Copilot's skill system. This README explains the same workflow for humans who are browsing the repository directly.
+- [SKILL.md](SKILL.md) — machine-readable instruction file Copilot uses to trigger and run this workflow
+- [README.md](README.md) — this document
+
+---
+
+[Back to skill catalog](../README.md)

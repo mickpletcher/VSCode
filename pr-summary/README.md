@@ -26,6 +26,11 @@ Use this skill when you need to:
 
 Good PR summaries reduce review time and make intent legible. This skill focuses on behavior, risk, and verification status instead of repeating raw file changes.
 
-## Why this README exists
+## Files
 
-`SKILL.md` drives Copilot behavior. This README explains the same workflow in plain language for people browsing the repository.
+- [SKILL.md](SKILL.md) — machine-readable instruction file Copilot uses to trigger and run this workflow
+- [README.md](README.md) — this document
+
+---
+
+[Back to skill catalog](../README.md)

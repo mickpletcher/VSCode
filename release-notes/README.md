@@ -25,6 +25,11 @@ Use this skill when you need to:
 
 Release notes often fail for one of two reasons: they are too vague to help users, or they are too technical to communicate value. This skill is designed to keep the output grounded in actual source changes while still reading like something you would publish.
 
-## Why this README exists
+## Files
 
-`SKILL.md` is the machine-readable instruction set used by Copilot. This README explains the same skill in plain language for people browsing the repository.
+- [SKILL.md](SKILL.md) — machine-readable instruction file Copilot uses to trigger and run this workflow
+- [README.md](README.md) — this document
+
+---
+
+[Back to skill catalog](../README.md)

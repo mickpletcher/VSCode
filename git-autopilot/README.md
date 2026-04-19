@@ -73,6 +73,11 @@ The skill is not just a happy-path script. It also defines how to respond when:
 
 That means the skill is intended to behave conservatively and report blockers instead of forcing through unsafe git operations.
 
-## Why this README exists
+## Files
 
-`SKILL.md` is the machine-readable instruction file Copilot uses to decide when and how to apply this workflow. This README explains that behavior in plain language so a human can quickly understand what the skill is for before reading the full skill definition.
+- [SKILL.md](SKILL.md) — machine-readable instruction file Copilot uses to trigger and run this workflow
+- [README.md](README.md) — this document
+
+---
+
+[Back to skill catalog](../README.md)

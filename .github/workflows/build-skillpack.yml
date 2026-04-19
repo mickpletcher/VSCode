@@ -32,12 +32,12 @@ jobs:
           name: skillpack
           path: |
             dist/skillpack
-            dist/skillpack.tar.gz
+            dist/skillpack.zip
 
       - name: Attach archive to release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/skillpack.tar.gz
+            dist/skillpack.zip
             dist/skillpack/manifest.json

@@ -12,7 +12,7 @@ The primary script in this directory. It packages every skill in the repository 
 - copies qualifying skill directories into a staging area under `dist/skillpack`
 - includes the root `README.md` and `LICENSE`
 - writes a manifest file listing packaged contents, versions, and SHA-256 hashes
-- produces a `dist/skillpack.tar.gz` archive
+- produces a `dist/skillpack.zip` archive
 
 ### Usage
 
@@ -50,4 +50,8 @@ The JSON manifest includes:
 
 ### CI integration
 
-This script is called by the GitHub Actions workflow at `.github/workflows/build-skillpack.yml`. The workflow runs validation and packaging on every push to `main`, on pull requests, and on published releases. The resulting archive is uploaded as a workflow artifact and attached to releases.
+This script is called by the GitHub Actions workflow at [.github/workflows/build-skillpack.yml](../.github/workflows/build-skillpack.yml). The workflow runs validation and packaging on every push to `main`, on pull requests, and on published releases. The resulting archive is uploaded as a workflow artifact and attached to releases.
+
+---
+
+[Back to skill catalog](../README.md)
