@@ -65,33 +65,7 @@ Summarizes a pull request or diff into a reviewer-friendly overview with key cha
 
 ## Skillpack Script
 
-The repository includes a packaging script at [scripts/skillpack.sh](scripts/skillpack.sh). It builds a distributable bundle under `dist/skillpack`, copies every top-level skill directory that contains a `SKILL.md`, includes the root README and license, writes a manifest, and creates a `dist/skillpack.tar.gz` archive.
-
-Run it from the repository root with:
-
-```bash
-./scripts/skillpack.sh
-```
-
-Or provide a custom output directory:
-
-```bash
-./scripts/skillpack.sh /path/to/output/skillpack
-```
-
-Validate the repository without building an archive:
-
-```bash
-./scripts/skillpack.sh --validate
-```
-
-Generate a JSON manifest instead of the default text manifest:
-
-```bash
-./scripts/skillpack.sh --manifest=json
-```
-
-The JSON manifest includes bundle metadata, SHA-256 hashes for packaged top-level files, and per-skill records with the skill name, version, description, packaged paths, and file hashes.
+The repository includes a packaging script at [scripts/skillpack.sh](scripts/skillpack.sh). It builds a distributable bundle under `dist/skillpack`, copies every top-level skill directory that contains a `SKILL.md`, includes the root README and license, writes a manifest, and creates a `dist/skillpack.tar.gz` archive. See [scripts/README.md](scripts/README.md) for full usage details.
 
 ## GitHub Actions
 
