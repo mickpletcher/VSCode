@@ -4,6 +4,7 @@ Thumbs.db
 .vscode/
 .idea/
 dist/
+future-upgrades.md
 
 *.swp
 *.swo
