@@ -1,8 +1,8 @@
 ---
-name: git-commit-sync
+name: git-autopilot
 version: 1.0.0
-description: Automates the full git commit workflow in VS Code. Analyzes staged and unstaged changes, generates a conventional commit message, stages files, commits, and pushes to GitHub. Use this when asked to commit changes, generate a commit message, push to GitHub, or sync with the remote repository.
-argument-hint: [optional: specific files or folders to include]
+description: Automates the full git commit and push workflow in VS Code. Analyzes staged and unstaged changes, generates a Conventional Commits message, stages files, commits, and pushes to the tracked remote. Use this when asked to commit changes, save work, generate a commit message, write a commit, push to GitHub, sync with remote, publish changes, or stage and commit specific files.
+argument-hint: "[files] optional specific files or folders to include"
 ---
 
 # Git Commit and Sync
