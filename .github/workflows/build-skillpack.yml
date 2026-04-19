@@ -18,13 +18,13 @@ jobs:
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Validate skill catalog
-        run: ./scripts/skillpack.sh --validate
+        run: bash ./scripts/skillpack.sh --validate
 
       - name: Build skillpack archive
-        run: ./scripts/skillpack.sh --manifest=json
+        run: bash ./scripts/skillpack.sh --manifest=json
 
       - name: Upload skillpack artifact
         uses: actions/upload-artifact@v4
