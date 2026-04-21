@@ -1,6 +1,6 @@
 Create a standardized `tasks.md` template for this repository so every new skill or automation can be implemented through a repeatable, spec-driven execution checklist.
 
-The template must align with the repository’s spec workflow, scaffold expectations, prompt shortcut requirements, and cross-platform support rules described in the current roadmap. :contentReference[oaicite:0]{index=0}
+The template must align with the repository’s spec workflow, scaffold expectations, prompt shortcut requirements, and cross-platform support rules described in `requirements.md`.
 
 ## Objective
 
@@ -35,7 +35,7 @@ Choose one of these implementation options:
 
 1. Create the file at:
 ```text
-specs/_templates/tasks.md
+specs/templates/tasks.md
 2. If a spec templates folder already exists, place it there instead.
 Use option 1 unless a better-established template location already exists in the repository.
 
@@ -216,6 +216,7 @@ Document that the following prompt files are part of the expected spec workflow 
 .github/prompts/tasks-skill.prompt.md
 .github/prompts/implement-skill-from-spec.prompt.md
 .github/prompts/generate-requirements.prompt.md
+.github/prompts/skill-audit.prompt.md
 
 Do not require these to be generated in this step, but require the template to recognize them as upstream or downstream dependencies.
 

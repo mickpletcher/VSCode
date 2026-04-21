@@ -22,7 +22,10 @@ Create the following files:
 .github/prompts/tasks-skill.prompt.md
 .github/prompts/implement-skill-from-spec.prompt.md
 .github/prompts/generate-requirements.prompt.md
+.github/prompts/skill-audit.prompt.md
 
+Also create:
+.github/copilot-instructions.md
 
 If the `.github/prompts/` folder does not exist, create it.
 
@@ -150,6 +153,46 @@ Must instruct Copilot to:
 
 ---
 
+## Prompt 6: skill-audit.prompt.md
+
+Purpose: Validate that a completed skill satisfies all repository requirements.
+
+Must instruct Copilot to:
+
+- accept a skill folder path as input
+- verify all required artifacts exist:
+  - `SKILL.md`
+  - `README.md`
+  - `.github/prompts/<skill-name>.prompt.md`
+- validate metadata completeness (name, category, tier, platforms, shortcut, limitations)
+- validate naming consistency across folder, SKILL.md, README.md, and prompt file
+- validate shortcut alignment
+- validate platform declarations (VS Code, GitHub Copilot, Azure DevOps / Azure Repos)
+- validate limitations are documented
+- validate README and SKILL.md are in sync
+- validate prompt file aligns with skill intent
+- report pass or fail per check with specific findings
+- list any blocking issues that must be resolved before the skill is considered complete
+
+---
+
+## copilot-instructions.md
+
+Purpose: Top-level entry point that tells GitHub Copilot how to behave in this repository.
+
+Must include:
+
+- repository purpose
+- pointer to `requirements.md` as the authoritative reference
+- the four-step spec workflow and which prompt files execute each step
+- spec lifecycle (backlog, in-progress, done)
+- required artifacts per skill and the sync rule
+- platform requirements and terminology rules
+- naming conventions
+- guardrails (what not to do)
+
+---
+
 ## File Content Requirements
 
 Each prompt file must include:
@@ -176,7 +219,8 @@ Each prompt file must include:
 
 After creation:
 
-- verify all 5 prompt files exist
+- verify all 6 prompt files exist
+- verify `copilot-instructions.md` exists under `.github/`
 - verify each file contains usable instructions
 - ensure naming consistency across files
 

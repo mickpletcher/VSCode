@@ -25,7 +25,7 @@ Choose one of these implementation options:
 
 1. Create a file at:
 ```text
-specs/_templates/spec.md
+specs/templates/spec.md
 2. If a templates folder already exists for spec workflow files, place it there instead.
 Use option 1 unless there is already a better-established templates location in the repository.
 

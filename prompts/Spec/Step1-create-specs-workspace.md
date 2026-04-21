@@ -87,6 +87,10 @@ Use markdown checkbox format.
 
 ## Naming Rules
 
+- All spec folders must use this format: `<NNN>-<skill-name>` (e.g. `001-bug-fix-investigator`)
+- The numeric prefix must be zero-padded to three digits
+- The numeric prefix must be the next available number in the `specs/` directory
+- The skill name portion must be lowercase kebab-case
 - Folder names must match skill names exactly
 - File names must be:
   - spec.md
