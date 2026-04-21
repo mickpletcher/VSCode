@@ -1,8 +1,8 @@
 ---
 name: git-autopilot
-version: 1.0.0
-description: Automates the full git commit and push workflow in VS Code. Analyzes staged and unstaged changes, generates a Conventional Commits message, stages files, commits, and pushes to the tracked remote. Use this when asked to commit changes, save work, generate a commit message, write a commit, push to GitHub, sync with remote, publish changes, or stage and commit specific files.
-argument-hint: "[files] optional specific files or folders to include"
+version: 1.1.0
+description: Automates the full git commit and push workflow in VS Code. Analyzes staged and unstaged changes, generates a Conventional Commits message, stages files, commits, and pushes to the tracked remote or a specified branch. Use this when asked to commit changes, save work, generate a commit message, write a commit, push to GitHub, sync with remote, publish changes, stage and commit specific files, push to a different branch, or push to a feature branch.
+argument-hint: "[files or --branch <name>] optional specific files, folders, or target branch"
 ---
 
 # Git Commit and Sync
@@ -137,16 +137,39 @@ For messages with a body, use a multi-line commit:
 git commit -m "type(scope): short description" -m "body text here"
 ```
 
-### Step 7 — Push to GitHub
+### Step 7 — Resolve target branch
 
-After a successful commit, push to the tracked remote branch:
+Before pushing, determine the target branch using this priority order:
+
+1. Branch explicitly named by the user in their request (e.g. "push to feature/my-branch")
+2. Branch passed as an argument (e.g. `--branch feature/my-branch`)
+3. The current branch's tracked upstream
+4. The current branch name with no upstream set
+
+If the user named a branch that does not exist locally or remotely, confirm before creating it.
+
+### Step 8 — Push
+
+Push to the resolved target branch.
+
+Push to the tracked upstream (default case):
 ```bash
 git push
 ```
 
-If the branch has no upstream set:
+Push to a different remote branch (user specified a target):
+```bash
+git push origin <target-branch>
+```
+
+Push a local branch that has no upstream set:
 ```bash
 git push --set-upstream origin <branch-name>
+```
+
+Push the current branch to a different target branch name:
+```bash
+git push origin HEAD:<target-branch>
 ```
 
 If the push is rejected due to upstream changes, report this to the user and do not force push. Recommend they pull and resolve conflicts first:
@@ -161,3 +184,6 @@ git pull --rebase
 - **Detached HEAD state**: Warn the user and do not commit until they are on a named branch.
 - **Large number of changed files**: Summarize by directory or module rather than listing every file in the commit body.
 - **Mixed unrelated changes**: Flag this to the user and recommend splitting into multiple focused commits before proceeding.
+- **Target branch does not exist**: Confirm with the user before creating a new remote branch.
+- **Target branch diverged**: Report the divergence and do not force push. Recommend pulling or rebasing the target branch first.
+- **Pushing to a protected branch**: Report that the push was rejected and defer to the user. Do not attempt to bypass branch protection.

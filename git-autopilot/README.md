@@ -16,7 +16,8 @@ Full sequence:
 4. Generate a Conventional Commits message derived from the actual diff content.
 5. Present the proposed message for confirmation before committing.
 6. Run `git commit`.
-7. Run `git push` to the tracked remote.
+7. Resolve the target branch from user input, argument, or tracked upstream.
+8. Run `git push` to the resolved target branch.
 
 ---
 
@@ -28,11 +29,13 @@ Invoke this skill by asking Copilot to:
 - save my work
 - generate a commit message
 - push to GitHub / push to origin
+- push to feature/my-branch
+- push to a different branch
 - sync with remote
 - stage and commit these files
 - publish my changes
 
-The skill also accepts an optional argument to narrow the scope to specific files or folders.
+The skill also accepts an optional argument to narrow the scope to specific files or folders, or to target a specific branch.
 
 ---
 
@@ -70,14 +73,16 @@ Rules:
 
 - Current working tree state (read automatically via `git status` and `git diff`)
 - Optional: specific files or folders to stage
+- Optional: target branch name to push to (defaults to tracked upstream)
 
 ---
 
 ## Outputs
 
-- A staged, committed, and pushed change set
+- A staged, committed, and pushed change set on the resolved target branch
 - A Conventional Commits message grounded in the actual diff
 - Confirmation prompt before the commit runs
+- Clear report of the branch pushed to
 
 ---
 
@@ -91,15 +96,19 @@ Rules:
 | No upstream set | Runs `git push --set-upstream origin <branch>` |
 | Push rejected | Reports the rejection and recommends `git pull --rebase`. Does not force push. |
 | Too many unrelated changes | Flags this and recommends splitting into focused commits |
+| Target branch does not exist | Confirms with the user before creating the remote branch |
+| Target branch diverged | Reports divergence and does not force push. Recommends pull or rebase. |
+| Push rejected by branch protection | Reports the rejection and defers to the user |
 
 ---
 
 ## Limitations
 
-- Does not force push under any circumstances. If the remote has newer changes, the user must pull and resolve.
+- Does not force push under any circumstances.
 - Does not resolve merge conflicts. Stops and defers to the user.
 - Cannot operate in a detached HEAD state. Requires a named branch.
 - Does not sign commits (`--gpg-sign`). If signing is required, the user must configure it separately.
+- Cannot bypass branch protection rules. If the target branch is protected, the push will be rejected and the user must resolve it through the platform UI or admin settings.
 
 ---
 
