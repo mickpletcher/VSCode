@@ -27,7 +27,7 @@ The repository is evolving from a static collection of prompt templates into a s
 All skills and automations must support the following three platforms. Support is required unless a documented limitation exists.
 
 | Platform | Description |
-|---|---|
+| --- | --- |
 | **VS Code** | Primary surface. All skills must work via GitHub Copilot Chat inside VS Code. |
 | **GitHub Copilot** | Skills must be invocable through Copilot chat, prompt files, or manual workflow triggers on GitHub. |
 | **Azure DevOps / Azure Repos** | Skills must be usable in Azure DevOps contexts including pipelines, work items, and Azure Repos. |
@@ -85,7 +85,7 @@ If a skill cannot fully support one of the three platforms above:
 Every skill or automation in this repository must include the following artifacts. No skill is considered complete without all of them.
 
 | Artifact | Path | Requirement |
-|---|---|---|
+| --- | --- | --- |
 | Skill definition | `<skill-name>/SKILL.md` | Required. Contains full skill logic, metadata, and instructions. |
 | Documentation | `<skill-name>/README.md` | Required. Contains usage, trigger phrases, examples, and platform limitations. |
 | Prompt file | `.github/prompts/<skill-name>.prompt.md` | Required. Enables invocation via Copilot chat and prompt picker. |
@@ -751,7 +751,7 @@ If a platform is not supported, remove it from the `platforms` list and document
 ### 8.1 Generated Files
 
 | File | Required content |
-|---|---|
+| --- | --- |
 | `<skill-name>/SKILL.md` | Full metadata block (see Section 6), skill logic placeholder, limitations section |
 | `<skill-name>/README.md` | Purpose, trigger phrases, usage examples, platform limitations section |
 | `.github/prompts/<skill-name>.prompt.md` | Prompt mode header, invocation description, skill reference |
@@ -779,7 +779,7 @@ After scaffolding, the output must be valid according to the requirements in Sec
 These rules define what a complete, valid skill looks like. Any skill failing one or more of these rules is considered incomplete.
 
 | Rule | Requirement |
-|---|---|
+| --- | --- |
 | V-01 | `SKILL.md` exists and contains a valid metadata block |
 | V-02 | `README.md` exists and contains a trigger phrases section |
 | V-03 | `.github/prompts/<skill-name>.prompt.md` exists |
@@ -799,7 +799,7 @@ These rules define what a complete, valid skill looks like. Any skill failing on
 
 The repository currently uses a flat folder structure. Each skill occupies a top-level folder.
 
-```
+```text
 <skill-name>/
   SKILL.md
   README.md
@@ -814,7 +814,7 @@ When the skill count grows to the point that the flat layout creates real naviga
 
 Proposed future structure:
 
-```
+```text
 skills/
   debugging/       # bug-fix-investigator, test-failure-loop, log-intelligence
   planning/        # issue-to-plan, refactor-planner, task-sequencer, feature-impact-analyzer
@@ -842,7 +842,7 @@ When restructuring happens, all of the following must be completed before the ch
 The following maintenance tasks are required to bring the repository into compliance with this specification.
 
 | Task | Priority | Description |
-|---|---|---|
+| --- | --- | --- |
 | Add shortcut invocation to all existing skills | High | Audit each `SKILL.md` for a trigger phrase or shortcut. Add one where missing. |
 | Add prompt files for all existing skills | High | Generate `.github/prompts/<skill-name>.prompt.md` for any skill missing one. |
 | Add metadata blocks to all existing skills | High | Add valid YAML frontmatter conforming to Section 6 to any `SKILL.md` missing it. |

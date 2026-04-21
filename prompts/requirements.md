@@ -1,3 +1,5 @@
+# Generate Requirements Prompt
+
 Create a complete `requirements.md` file for this repository.
 
 The purpose of `requirements.md` is to define the full requirements specification for:
@@ -40,6 +42,7 @@ The file must cover both current and planned items.
 ### Existing skills already in the repository
 
 Include requirements coverage for:
+
 - `git-autopilot`
 - `skill-scaffold`
 - `release-notes`
@@ -48,6 +51,7 @@ Include requirements coverage for:
 ### Tier 1 highest-impact future skills and automations
 
 Include requirements for:
+
 - `context-builder`
 - `bug-fix-investigator`
 - `repo-onboarding`
@@ -62,6 +66,7 @@ Include requirements for:
 ### Tier 2 strong multipliers
 
 Include requirements for:
+
 - `fix-build-pipeline`
 - `ci-troubleshoot`
 - `feature-scaffold`
@@ -81,6 +86,7 @@ Include requirements for:
 ### Tier 3 advanced differentiators
 
 Include requirements for:
+
 - `feature-impact-analyzer`
 - `task-sequencer`
 - `codebase-consistency-enforcer`
@@ -90,6 +96,7 @@ Include requirements for:
 ### Tier 4 system-level optimization and experimental
 
 Include requirements for:
+
 - `copilot-feedback-loop`
 - `prompt-optimizer`
 - `skill-audit`
@@ -99,7 +106,7 @@ Include requirements for:
 
 Generate the markdown file with these sections in this order.
 
-# Requirements Specification
+## Requirements Specification
 
 ## 1. Purpose
 
@@ -108,6 +115,7 @@ Define the purpose of the repository and the role of `requirements.md`.
 ## 2. Strategic Objective
 
 Explain that the repository is intended to become:
+
 - a VS Code Copilot acceleration layer
 - a cross-platform automation framework
 - a lightweight automation system inside VS Code
@@ -125,6 +133,7 @@ If something cannot support one of these, the limitation must be explicitly docu
 ## 4. Core Design Principles
 
 Include requirements that:
+
 - avoid GitHub-only assumptions
 - prefer platform-neutral terminology
 - require Azure equivalents where needed
@@ -165,3 +174,4 @@ limitations:
   - <limitation 1>
   - <limitation 2>
   - <limitation 3>
+```

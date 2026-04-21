@@ -1,3 +1,5 @@
+# Step1 Create Specs Workspace
+
 Create a new `specs/` workspace in this repository to support spec-driven development.
 
 ## Objective
@@ -22,7 +24,6 @@ tasks.md
 spec.md
 plan.md
 tasks.md
-
 
 ---
 
@@ -61,7 +62,7 @@ Each `plan.md` must include:
 - Files to be generated:
   - SKILL.md
   - README.md
-  - .github/prompts/<skill>.prompt.md
+  - `.github/prompts/<skill-name>.prompt.md`
 - Platform compatibility notes
 - Risks and assumptions
 
