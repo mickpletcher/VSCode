@@ -1,81 +1,111 @@
 # git-autopilot
 
-This repository contains a VS Code Copilot skill that automates the standard git commit workflow inside chat-driven sessions.
+Automates the full git commit and push workflow inside GitHub Copilot Chat. Takes the working tree from its current state to a clean commit on the remote without requiring manual git commands.
 
-## What the skill does
+---
 
-The skill defined in `SKILL.md` is named `git-commit-sync`. It is designed to handle the full sequence involved in saving and syncing work to a Git remote:
+## What it does
 
-- inspects staged, unstaged, and untracked changes
-- reviews the diff to understand what changed
-- stages files when needed
-- generates a Conventional Commits message
-- asks for confirmation before committing
-- creates the commit
-- pushes the commit to the tracked remote branch
+The skill inspects the repository state, reads the actual diff, generates a Conventional Commits message, presents it for confirmation, then stages, commits, and pushes. Every step is gated — it does not commit without confirmation and does not force through unsafe git operations.
 
-In short, it turns a request like "commit my changes" or "push this to GitHub" into a structured git workflow instead of a single blind command.
+Full sequence:
 
-## When to use it
+1. Run `git status` to identify staged, modified, and untracked files.
+2. Run `git diff --staged` (or `git diff` if nothing is staged) to read what changed.
+3. Stage files — either all changes or only the files the user specified.
+4. Generate a Conventional Commits message derived from the actual diff content.
+5. Present the proposed message for confirmation before committing.
+6. Run `git commit`.
+7. Run `git push` to the tracked remote.
 
-According to the skill description, this skill should be used when the user asks to:
+---
 
-- commit changes
-- generate or rewrite a commit message
-- push, sync, or publish changes to GitHub
-- stage and commit specific files or folders
+## Trigger phrases
 
-It also accepts an optional argument hint so the user can narrow the action to specific files or directories.
+Invoke this skill by asking Copilot to:
 
-## Commit message behavior
+- commit my changes
+- save my work
+- generate a commit message
+- push to GitHub / push to origin
+- sync with remote
+- stage and commit these files
+- publish my changes
 
-The skill standardizes commit messages using the Conventional Commits format:
+The skill also accepts an optional argument to narrow the scope to specific files or folders.
 
-```text
+---
+
+## Commit message format
+
+All messages follow the Conventional Commits standard:
+
+```
 type(scope): short description
 
 [optional body]
 ```
 
-It supports common commit types such as `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `chore`, `ci`, and `style`.
+Supported types: `feat`, `fix`, `docs`, `refactor`, `perf`, `test`, `chore`, `ci`, `style`
 
-The guidance in the skill emphasizes that commit messages should:
+Rules:
+- Lowercase, no period, 72 characters or less
+- Imperative mood ("add feature" not "added feature")
+- Scope is the affected module or component — omit if the change is broad
+- Body only when the change is non-obvious or has side effects reviewers need
 
-- describe the behavior change, not just the files touched
-- stay concise and imperative
-- use a scope when it improves clarity
-- include a body only when extra reviewer context is needed
+---
 
-## Workflow encoded in the skill
+## Supported platforms
 
-The skill documents a step-by-step process:
+| Platform | Support |
+|---|---|
+| VS Code | Full support via GitHub Copilot Chat |
+| GitHub Copilot | Full support via prompt file invocation |
+| Azure DevOps / Azure Repos | Full support. Works with any git remote. |
 
-1. Check repository state with `git status`.
-2. Review staged or unstaged diffs.
-3. Stage either all changes or only user-specified files.
-4. Generate a Conventional Commits message from the actual diff.
-5. Present the proposed message for user confirmation.
-6. Run `git commit`.
-7. Run `git push`.
+---
 
-This makes the skill useful as an operational guide as well as an automation prompt.
+## Inputs
 
-## Safety and edge cases
+- Current working tree state (read automatically via `git status` and `git diff`)
+- Optional: specific files or folders to stage
 
-The skill is not just a happy-path script. It also defines how to respond when:
+---
 
-- there is nothing to commit
-- merge conflicts are present
-- the repository is in a detached `HEAD` state
-- the branch has no upstream configured
-- the push is rejected because the remote has newer changes
-- the working tree contains too many unrelated changes for a single clean commit
+## Outputs
 
-That means the skill is intended to behave conservatively and report blockers instead of forcing through unsafe git operations.
+- A staged, committed, and pushed change set
+- A Conventional Commits message grounded in the actual diff
+- Confirmation prompt before the commit runs
+
+---
+
+## Edge cases
+
+| Situation | Behavior |
+|---|---|
+| Nothing to commit | Reports clean state and exits without committing |
+| Merge conflicts present | Stops immediately and tells the user to resolve conflicts first |
+| Detached HEAD | Warns the user and does not commit until on a named branch |
+| No upstream set | Runs `git push --set-upstream origin <branch>` |
+| Push rejected | Reports the rejection and recommends `git pull --rebase`. Does not force push. |
+| Too many unrelated changes | Flags this and recommends splitting into focused commits |
+
+---
+
+## Limitations
+
+- Does not force push under any circumstances. If the remote has newer changes, the user must pull and resolve.
+- Does not resolve merge conflicts. Stops and defers to the user.
+- Cannot operate in a detached HEAD state. Requires a named branch.
+- Does not sign commits (`--gpg-sign`). If signing is required, the user must configure it separately.
+
+---
 
 ## Files
 
-- [SKILL.md](SKILL.md) — machine-readable instruction file Copilot uses to trigger and run this workflow
+- [SKILL.md](SKILL.md) — machine-readable skill definition and workflow instructions
 - [README.md](README.md) — this document
 
 ---
